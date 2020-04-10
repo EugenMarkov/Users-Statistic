@@ -1,0 +1,23 @@
+@import "./reset.scss";
+
+:root {
+  --main-color: #1A1A1A;
+  --decoration-color: #3A80BA;
+  --secondary-color: #1C3B55;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  color: var(--main-color);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  outline: none;
+}
+:focus {
+  outline: none;
+}

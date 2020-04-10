@@ -1,0 +1,18 @@
+.footer {
+    background-color: var(--secondary-color);
+    &_container {
+        height: 57px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &_logo {
+        color: #FFFFFF;
+        font-size: 24px;
+        text-decoration: none;
+    }
+    &_text {
+        color: #FFFFFF;
+        font-size: 16px;
+    }
+}

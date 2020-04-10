@@ -1,0 +1,31 @@
+{
+  "name": "users_statistic_backend",
+  "version": "1.0.0",
+  "description": "Back End code",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
+    "front": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\"  \"npm run front\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EugenMarkov/"
+  },
+  "author": "EugenMarkov",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "moment": "^2.24.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "sqlite3": "4.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.1",
+    "husky": "^4.2.1",
+    "nodemon": "^1.19.1"
+  }
+}

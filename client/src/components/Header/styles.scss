@@ -1,0 +1,15 @@
+.header {
+    background-color: var(--decoration-color);
+    align-items: center;
+    &_container {
+        height: 72px;
+        display: flex;
+        align-items: center;
+    }
+    &_logo {
+        color: #FFFFFF;
+        height: 49px;
+        font-size: 40px;
+        text-decoration: none;
+    }
+}

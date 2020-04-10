@@ -1,0 +1,33 @@
+.statistic {
+    &_table {
+        border-radius: 8px;
+        &_row {
+            cursor: pointer;
+            background-color: #FBFBFB;
+            &:nth-child(even) {
+                background-color: #F1F1F1;
+            }
+        }
+        &_headerCell {
+            height: 48px;
+            color: #FFFFFF;
+            background-color: var(--decoration-color);
+            border-right: #FFFFFF;
+            white-space: nowrap;
+        }
+        &_bodyCell {
+            white-space: nowrap;
+        }
+        &_pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        &_paginationtest {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+    }
+}
