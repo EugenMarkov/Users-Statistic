@@ -10,12 +10,14 @@ import Paper from "@material-ui/core/Paper";
 import { Pagination } from "@material-ui/lab/";
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 import axios from "axios";
+import Preloader from "../../Preloader";
 
 import "./styles.scss";
 
 export default function CustomizedTables() {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+  const [preloader, setPreloader] = useState(true);
   const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
 
   const handleChange = (event, value) => {
@@ -28,8 +30,14 @@ export default function CustomizedTables() {
   useEffect(() => {
     axios
       .get(`/api/users?page=${page}&perPage=50`)
-      .then(res => setUsers(res.data.users))
-      .catch(error => console.log(error.response));
+      .then(res => {
+        setPreloader(false);
+        setUsers(res.data.users)
+      })
+      .catch(error => {
+        setPreloader(false);
+        console.log(error.response);
+      });
   }, [page]);
 
   const numberWithSpaces = number => {
@@ -57,7 +65,7 @@ export default function CustomizedTables() {
     </TableRow>
   ));
 
-  return (
+  return ( preloader ? <Preloader /> : (
     <div>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
@@ -80,6 +88,6 @@ export default function CustomizedTables() {
         <Pagination count={20} onChange={handleChange} size={matches ? "medium" : "small"} siblingCount={matches ? 1 : 0} boundaryCount={1} />
       </div>
     </div>
-  );
+  ));
 }
 

@@ -17,12 +17,14 @@ import {
   Line,
 } from "recharts";
 import axios from "axios";
+import Preloader from "../Preloader";
 
 import "./styles.scss";
 
 
 const UserDetails = () => {
-  const [userData, setUserData] = useState([{ first_name: "", last_name: "" }]);
+  const [userData, setUserData] = useState( [{ first_name: "", last_name: ""}]);
+  const [preloader, setPreloader] = useState(true);
   const params = useParams();
   const history = useHistory();
   const matches = useMediaQuery(theme => theme.breakpoints.up("md"));
@@ -30,17 +32,23 @@ const UserDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/users/${params.id}?start=2019-10-01&end=2019-10-30`)
+      .get(`/api/users/${params.id}?start=2019-10-01&end=2019-10-07`)
       .then(res => {
-        setUserData(res.data.userData);
+        if(res.data.message === "success") {
+          setUserData(res.data.userStatistic);
+          setPreloader(false);
+        } else {
+          history.push("/");
+        }
       })
       .catch(error => {
+        setPreloader(false);
         history.push("/");
         console.log(error);
       });
   }, [history, params.id]);
 
-  return (
+  return ( preloader ? <Preloader /> : (
     <section className="user_details">
       <Container maxWidth={matches ? "xl" : "md"}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
@@ -50,17 +58,14 @@ const UserDetails = () => {
           <Link to="/users" className={match ? "breadcrumbs_link" : "breadcrumbs_link--small"}>
             User statistics
           </Link>
-          <Link
-            to={`/users/${userData[0].user_id}`}
-            className={match ? "breadcrumbs_link breadcrumbs_link--active" : "breadcrumbs_link--small breadcrumbs_link--active"}
-          >
+          <span className={match ? "breadcrumbs_link breadcrumbs_link--active" : "breadcrumbs_link--small breadcrumbs_link--active"}>
             {`${userData[0].first_name} ${userData[0].last_name}`}
-          </Link>
+          </span>
         </Breadcrumbs>
         <Typography variant="h2">{`${userData[0].first_name} ${userData[0].last_name}`}</Typography>
         <Typography variant="h3">Clicks</Typography>
         <TableContainer component={Paper} className="user_details_chart_wrapper">
-          <LineChart width={1300} height={250} data={userData}>
+          <LineChart width={1080} height={250} data={userData}>
             <CartesianGrid vertical={false} stroke="#CCCCCC" />
             <XAxis dataKey="date" stroke="#CCCCCC" />
             <YAxis dataKey="clicks" stroke="#CCCCCC" axisLine={false} />
@@ -78,7 +83,7 @@ const UserDetails = () => {
         </TableContainer>
         <Typography variant="h3">Views</Typography>
         <TableContainer component={Paper} className="user_details_chart_wrapper">
-          <LineChart width={1300} height={250} data={userData}>
+          <LineChart width={1080} height={250} data={userData}>
             <CartesianGrid vertical={false} stroke="#CCCCCC" />
             <XAxis dataKey="date" stroke="#CCCCCC" />
             <YAxis dataKey="page_views" stroke="#CCCCCC" axisLine={false} />
@@ -96,7 +101,7 @@ const UserDetails = () => {
         </TableContainer>
       </Container>
     </section>
-  );
+  ));
 };
 
 export default UserDetails;

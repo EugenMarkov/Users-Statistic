@@ -72,9 +72,6 @@ let db = new sqlite3.Database(DBSOURCE, err => {
         }
       }
     );
-
-    // db.close();
-    // console.log("db close");
   }
 });
 
