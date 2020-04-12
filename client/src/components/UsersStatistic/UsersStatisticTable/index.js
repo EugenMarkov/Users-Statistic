@@ -14,7 +14,7 @@ import Preloader from "../../Preloader";
 
 import "./styles.scss";
 
-export default function CustomizedTables() {
+export default function UsersStatisticTable() {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [preloader, setPreloader] = useState(true);
