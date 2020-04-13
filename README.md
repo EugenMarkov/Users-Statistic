@@ -5,15 +5,22 @@ Monorepo: Back-end + Front-end
 
 Author: Eugen Markov
 
-Technology Stack
-Front-end:
-React with React Hooks
+## Technology Stack
+#### Front-end:
 
-React styles & libraries: Material-UI, SCSS
+- React with React Hooks
 
-Backend:
-Node.js, Express;
-Database:
-SQLite;
+- React styles & libraries: Material-UI, SCSS
 
-For start development front and back: "npm run dev"
+#### Backend: 
+- Node.js, Express, SQLite3;
+#### Database:
+- SQLite;
+ 
+ For start development front and back: "npm run dev"
+
+
+
+
+
+
