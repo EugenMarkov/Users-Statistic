@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,29 +16,32 @@ import "./styles.scss";
 
 export default function UsersStatisticTable() {
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
   const [preloader, setPreloader] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
   const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
+  const history = useHistory();
+  const location = useLocation();
 
   const handleChange = (event, value) => {
-    setPage(value);
+    history.push(`/users?page=${value}`);
   };
-  const history = useHistory();
   function handleClick(id) {
     history.push(`/users/${id}`);
   }
   useEffect(() => {
+    const page = location.search.slice(1).split("=")[1] || 1;
+    setPageNumber(+page);
     axios
       .get(`/api/users?page=${page}&perPage=50`)
       .then(res => {
         setPreloader(false);
-        setUsers(res.data.users)
+        setUsers(res.data.users);
       })
       .catch(error => {
         setPreloader(false);
         console.log(error.response);
       });
-  }, [page]);
+  }, [location.search]);
 
   const numberWithSpaces = number => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -85,7 +88,14 @@ export default function UsersStatisticTable() {
         </Table>
       </TableContainer>
       <div className="statistic_table_pagination">
-        <Pagination count={20} onChange={handleChange} size={matches ? "medium" : "small"} siblingCount={matches ? 1 : 0} boundaryCount={1} />
+        <Pagination
+          count={20}
+          page={pageNumber}
+          onChange={handleChange}
+          size={matches ? "medium" : "small"}
+          siblingCount={matches ? 1 : 0}
+          boundaryCount={1}
+        />
       </div>
     </div>
   ));
